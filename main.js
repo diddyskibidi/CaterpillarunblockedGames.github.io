@@ -54,30 +54,12 @@ insertHTMLIntoBody();
 //}
 //}
 
-// bad method :) - checks whether primary colour has a value, if it doesnt then it resets all customisation values.
-function setDefaultValuesIfPrimaryColorMissing() {
-    const primaryColor = localStorage.getItem('primary-color');
-
-    if (!primaryColor || primaryColor === '') {
-        localStorage.setItem('background-image', '/background.png');
-        localStorage.setItem('primary-color', '#111E2C');
-        localStorage.setItem('secondary-color', '#58AAFC');
-        localStorage.setItem('background-res', '1280');
-    }
-}
-
-// Call the function to set default values if primary-color is missing
-setDefaultValuesIfPrimaryColorMissing();
-
 //document.addEventListener('DOMContentLoaded', function() {
 //  setDefaultLocalStorageValues();
 //});
 
 document.addEventListener('DOMContentLoaded', function () {
     // Set server button if it hasnt been set already
-    if (!localStorage.getItem("selectedButton")) {
-        localStorage.setItem("selectedButton", "primary"); //Default to primary - Line 310
-    }
 
     // Fetch and insert navbar and title bar
     fetch('/navbar.html')
@@ -142,7 +124,7 @@ function loadScript(url) {
 }
 
 // Load pages-long.js and then initialize search functionality
-loadScript('pages-long.js')
+loadScript('pages.js')
     .then(() => {
         // Ensure the pagesData array is defined before attaching the search functionality
         if (typeof pagesData !== 'undefined' && Array.isArray(pagesData)) {
@@ -407,7 +389,7 @@ function setIframeSrc(url, button) {
 
 
 function getPrimarySrc() {
-    return 'https://coolubg.github.io/coolubg-list/';
+    return 'https://coolubg2.github.io/coolubg-list/';
 }
 
 function getBackupSrc() {
@@ -508,9 +490,9 @@ function fullscreenFunction2() {
 }
 
 function applyStoredSettings() {
-    const backgroundImage = localStorage.getItem('background-image');
+    const backgroundImage = '';
     const primaryColor = localStorage.getItem('primary-color');
-    const secondaryColor = localStorage.getItem('secondary-color');
+    const secondaryColor = '#ff5e5e';
     const fixedBackgroundImg = document.querySelector('.fixed-background');
 
     if (fixedBackgroundImg && backgroundImage) {
