@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
     <style>
-
         .selected {
             background-color: var(--secondary-color) !important;
             color: var(--primary-color) !important;
@@ -27,46 +26,51 @@
             text-decoration: underline !important;
         }
 
-        .logo {
-            margin-bottom: 2px;
-        }
-
         .navbar {
             font-weight: bold;
             font-size: large;
             background-color: var(--secondary-color);
             width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center; /* Center horizontally */
-            padding-top: 0.3%;
-            padding-bottom: 0.6%;
-            position: relative; /* Necessary for absolute positioning */
-            margin-bottom: -90px;
+            align-items: center; /* Center items vertically */
+            height: 12vh; /* Set navbar height */
+            padding: 0 1%; /* Adjust horizontal padding */
+            position: fixed; /* Make navbar fixed */
+            top: 0; /* Ensure navbar is at the top */
+            z-index: 1000; /* Ensure navbar is on top of other content */
+        }
+
+        .logo {
+            position: absolute; /* Make the logo position absolute */
+            left: 1%; /* Align it to the left with a small margin */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Adjust for perfect centering */
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: center; /* Center content */
+            flex-grow: 1; /* Allow the container to take available space */
+            align-items: center; /* Center items vertically */
         }
 
         .navbar-menu {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            white-space: nowrap;
-            margin-left: auto; /* Center horizontally */
-            margin-right: auto; /* Center horizontally */
+            align-items: center; /* Center vertically */
         }
 
         .navbar-menu a {
             text-align: center;
             padding: 10px; 
             margin: 2px;
-            margin-right: 6px;
-            margin-left: 10px;
-
             border-radius: 1vw;
             outline: 0px solid var(--primary-color);
             background-color: var(--secondary-color);
             color: var(--primary-color);
             font-size: large;
+            height: 100%; /* Ensure anchor links fill navbar height */
+            display: flex; /* Flex display for centering */
+            align-items: center; /* Center text vertically */
         }
 
         .navbar-menu a:hover {
@@ -77,8 +81,7 @@
 
         #searchInput {
             white-space: nowrap;
-            margin: 2%;
-            width: 240px !important;
+            width: 220px !important; /* Increased width to avoid cutoff */
             padding: 10px 5px !important;
             font-family: "M Plus Rounded 1c", sans-serif;
             cursor: pointer;
@@ -88,6 +91,8 @@
             color: var(--primary-color);
             border-radius: 1vw;
             border-color: transparent;
+            height: 80%; /* Adjust search input height to fit navbar */
+            margin-left: 10px; /* Add some margin for spacing */
         }
 
         #searchInput::placeholder {
@@ -98,19 +103,12 @@
             color: var(--primary-color);
         }
 
-
-.info-container {
-    position: absolute;
-    top: 50%;
-    right: 110px; /* Adjust as needed */
-    transform: translateY(-50%);
-    z-index: 999; /* Ensure it's above other content */
-}
-
-
-        .info-container:hover .popup {
-            visibility: visible;
-            opacity: 1;
+        .info-container {
+            position: absolute;
+            top: 50%;
+            right: 110px; /* Adjust as needed */
+            transform: translateY(-50%);
+            z-index: 999; /* Ensure it's above other content */
         }
 
         .button-container {
@@ -122,6 +120,7 @@
             right: 10px;
             transform: translateY(-50%);
         }
+
         .button-container2 {
             display: flex;
             flex-direction: column;
@@ -134,19 +133,23 @@
     </style>
 </head>
 <body>
-    <div class="navbar" style="position: fixed;">
-        <!-- <div class="logo">
+    <div class="navbar">
+        <div class="logo">
             <a href="/index.html">
-                <img src="/title.png" width="400px">
-        </div> -->
-        <div class="navbar-menu">
-            <a href="/index.html">Home</a>
-            <a href="/random.html">Random</a>
-           <!-- <a href="/about.html">Contact</a> -->
-            <div class="container" style="min-width: 240px; margin: 0 auto; padding: 0; margin-left: 5px; border-radius: 1vw; box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1); position: relative;">
-                <input type="text" id="searchInput" placeholder="Search..." autocomplete="off" style="width: calc(100% - 10px); padding: 6px; font-size: large; border: 0px solid #3c3c3c; border-radius: 1vw; box-sizing: border-box; margin-bottom: 5px; outline: 6px solid var(--primary-color); text-shadow: none !important;">
-                <div id="searchResults" style="position: absolute; top: calc(100% + 5px); left: 0; width: 100%; background-color: var(--secondary-color); border-radius: 1vw; box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.2); overflow-y: auto; max-height: 300px; z-index: 999; padding: 5px; overflow-x: hidden; display: none;">
-                    <!-- Search results will be inserted here -->
+                <img src="/title.png" alt="Logo" style="height: 10vh; width: auto; vertical-align: middle;"> <!-- Ensure logo maintains aspect ratio -->
+            </a>
+        </div>
+        <div class="navbar-container">
+            <div class="navbar-menu">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/random.html">Random</a>
+                <!-- <a href="/about.html">Contact</a> -->
+                <div class="container" style="min-width: 220px; margin: 0 auto; padding: 0; margin-left: 5px; border-radius: 1vw; box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1); position: relative;">
+                    <input type="text" id="searchInput" placeholder="Search..." autocomplete="off" style="width: calc(100% - 10px); padding: 6px; font-size: large; border: 0px solid #3c3c3c; border-radius: 1vw; box-sizing: border-box; margin-bottom: 5px; outline: 6px solid var(--primary-color); text-shadow: none !important;">
+                    <div id="searchResults" style="position: absolute; top: calc(100% + 5px); left: 0; width: 100%; background-color: var(--secondary-color); border-radius: 1vw; box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.2); overflow-y: auto; max-height: 300px; z-index: 999; padding: 5px; overflow-x: hidden; display: none;">
+                        <!-- Search results will be inserted here -->
+                    </div>
                 </div>
             </div>
         </div>

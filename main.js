@@ -12,18 +12,20 @@ function insertIntoHead(content) {
     head.appendChild(fragment);
 }
 
-insertIntoHead('  <script src="/pages.js"></script>');
+insertIntoHead('  <script src="https://coolubg2.github.io/pages.js"></script>');
 
 // Function to load an external script dynamically
 function loadScript(url) {
     var script = document.createElement('script');
     script.src = url;
-    script.async = true;
+    script.async = true; // or use script.defer = true; if order matters
+
     document.head.appendChild(script);
 }
 
-// Load pages.js
-loadScript('pages.js');
+// Load pages.js immediately
+loadScript('https://coolubg2.github.io/pages.js');
+
 
 function insertHTMLIntoBody() {
     // Create a new div element
@@ -55,26 +57,26 @@ insertHTMLIntoBody();
 //}
 
 // bad method :) - checks whether primary colour has a value, if it doesnt then it resets all customisation values.
-function setDefaultValuesIfPrimaryColorMissing() {
-    const customisationData = localStorage.getItem('customisation');
+//function setDefaultValuesIfPrimaryColorMissing() {
+   // const customisationData = localStorage.getItem('customisation');
 
     // Check if the "customisation" data is missing or the primary color is missing/empty
-    if (!customisationData || customisationData.split('\n')[1] === '') {
-        const defaultCustomisation = [
-            '/background.png',  // Default background image
-            '#111E2C',          // Default primary color
-            '#58AAFC',          // Default secondary color
-            '1280'              // Default background resolution
-        ].join('\n');
+    //if (!customisationData || customisationData.split('\n')[1] === '') {
+        //const defaultCustomisation = [
+            //'/background.png',  // Default background image
+            //'#111E2C',          // Default primary color
+          //  '#58AAFC',          // Default secondary color
+        //    '1280'              // Default background resolution
+      //  ].join('\n');
 
         // Store the default values in the "customisation" key
-        localStorage.setItem('customisation', defaultCustomisation);
-    }
-}
+    //    localStorage.setItem('customisation', defaultCustomisation);
+  //  }
+//}
 
 
 // Call the function to set default values if primary-color is missing
-setDefaultValuesIfPrimaryColorMissing();
+//setDefaultValuesIfPrimaryColorMissing();
 
 //document.addEventListener('DOMContentLoaded', function() {
 //  setDefaultLocalStorageValues();
@@ -105,39 +107,38 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error loading navbar:', error));
 
-            fetch('/titlebar.html')
-              .then(response => response.text())
-              .then(data => {
-                const titlebarContainer = document.getElementById('titlebar-container');
-                titlebarContainer.innerHTML = ''; // Clear existing content
-                titlebarContainer.innerHTML = data; // Insert new content
-          
-                // Set title and author if defined
-                if (typeof titleText !== 'undefined') {
-                  document.getElementById('title-text').textContent = titleText;
-                }
-                if (typeof author !== 'undefined' && typeof authorLink !== 'undefined') {
-                  document.getElementById('author-text').innerHTML = `<a href="${authorLink}">${author}</a>`;
-                }
-          
-                // Set up polling mechanism with maximum time limit
-                var maxPollingTime = 8000; // Maximum polling time in milliseconds (e.g., 5 seconds)
-                var startTime = Date.now();
-                var pollingInterval = setInterval(() => {
-                  const iframe = document.getElementById('game-iframe');
-                  const titleBar = document.getElementById('dynamic-title-bar');
-                  if (iframe && titleBar) {
-                    titleBar.style.width = `${iframe.offsetWidth - 40}px`;
-                    clearInterval(pollingInterval); // Stop polling once title bar width is set
-                  } else if (Date.now() - startTime > maxPollingTime) {
-                    clearInterval(pollingInterval); // Stop polling after timeout
-                    console.warn('Timeout reached: title bar or iframe not found.');
-                  }
-                }, 100);
-          
-                loadIframe(); // Load iframe after title bar content is loaded
-              })
-              .catch(error => console.error('Error loading title bar:', error));
+            // Function to update the width of the title bar based on the iframe size
+//function updateTitleBarWidth(iframe, titleBar) {
+   // if (iframe && titleBar) {
+     // titleBar.style.width = `${800 - 40}px`; // Adjust width with 40px padding
+   // }
+  //}
+  
+  // Fetch and update the title bar content
+  fetch('/titlebar.html')
+    .then(response => response.text())
+    .then(data => {
+      const titlebarContainer = document.getElementById('titlebar-container');
+      titlebarContainer.innerHTML = ''; // Clear existing content
+      titlebarContainer.innerHTML = data; // Insert new content
+  
+      // Set title and author if defined
+      if (typeof titleText !== 'undefined') {
+        document.getElementById('title-text').textContent = titleText;
+      }
+      if (typeof author !== 'undefined' && typeof authorLink !== 'undefined') {
+        document.getElementById('author-text').innerHTML = `<a href="${authorLink}">${author}</a>`;
+      }
+  
+      // Start the polling mechanism to update the title bar width for up to 5 seconds
+      const iframe = document.getElementById('game-iframe');
+      const titleBar = document.getElementById('dynamic-title-bar');
+     // checkIframeAndUpdateTitleBar(iframe, titleBar, 5000); // Run for 5 seconds
+     titleBar.style.width = `${800 - 40}px`; // Adjust width with 40px padding
+      loadIframe(); // Load iframe after title bar content is loaded
+    })
+    .catch(error => console.error('Error loading title bar:', error));
+  
           });
 // Function to load an external script dynamically with a Promise
 function loadScript(url) {
@@ -152,16 +153,16 @@ function loadScript(url) {
 }
 
 // Load pages-long.js and then initialize search functionality
-loadScript('pages-long.js')
-    .then(() => {
+//loadScript('pages-long.js')
+   // .then(() => {
         // Ensure the pagesData array is defined before attaching the search functionality
-        if (typeof pagesData !== 'undefined' && Array.isArray(pagesData)) {
-            attachNavbarListeners();
-        } else {
-            console.error('pagesData array is not defined or not an array.');
-        }
-    })
-    .catch(error => console.error(error));
+    //    if (typeof pagesData !== 'undefined' && Array.isArray(pagesData)) {
+    //        attachNavbarListeners();
+     //   } else {
+     //       console.error('pagesData array is not defined or not an array.');
+     //   }
+   // })
+   // .catch(error => console.error(error));
 
     function attachNavbarListeners() {
         const searchInput = document.getElementById('searchInput');
@@ -208,7 +209,7 @@ loadScript('pages-long.js')
                     anchor.style.textDecoration = 'none';
                 });
                 const image = document.createElement('img');
-                image.src = `/images/games/${pageData.name}.png`;
+                image.src = `https://coolubg2.github.io/images/games/${pageData.name}.png`;
                 image.alt = `${pageData.name}`;
                 image.style.width = '70px';
                 image.style.height = '39.38px';
@@ -334,7 +335,7 @@ function searchPages(query) {
                 anchor.style.textDecoration = 'none';
             });
             const image = document.createElement('img');
-            image.src = `/images/games/${pageData.name}.png`;
+            image.src = `https://coolubg2.github.io/images/games/${pageData.name}.png`;
             image.alt = `${pageData.name}`;
             image.style.width = '70px';
             image.style.height = '39.38px';
@@ -417,7 +418,7 @@ function setIframeSrc(url, button) {
 
 
 function getPrimarySrc() {
-    return 'https://coolubg.github.io/coolubg-list/';
+    return 'https://coolubg2.github.io/coolubg-list/';
 }
 
 function getBackupSrc() {
@@ -444,25 +445,6 @@ function updateButtonState(selectedButton) {
     primaryButton.textContent = "Primary" + (selectedButton === 'primary' ? "" : "");
     backupButton.textContent = "Secondary" + (selectedButton === 'backup' ? "" : "");
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    const customisation = localStorage.getItem('customisation');
-    const fixedBackgroundImg = document.querySelector('.fixed-background');
-
-    if (customisation) {
-        // Split the string into lines
-        const lines = customisation.split('\n');
-
-        // Ensure there are at least 4 lines
-        if (lines.length >= 4) {
-            const backgroundRes = parseInt(lines[3].trim());
-            if (!isNaN(backgroundRes)) {
-                fixedBackgroundImg.style.backgroundSize = `${backgroundRes}px auto`;
-            }
-        }
-    }
-});
-
 
 function fullscreenFunction1() {
     var iframe = document.getElementById('game-iframe');
@@ -527,55 +509,43 @@ function fullscreenFunction2() {
         URL.revokeObjectURL(blobUrl);
     });
 }
+document.addEventListener('DOMContentLoaded', function () {
+    const fixedBackgroundImg = document.querySelector('.fixed-background');
 
-function applyStoredSettings() {
-    // Get the "customisation" data from localStorage
-    const customisationData = localStorage.getItem('customisation');
+    // Default customization settings
+    const defaultCustomisation = [
+        '/background.png',  // Default background image
+        '#111E2C',          // Default primary color
+        '#58AAFC',          // Default secondary color
+        '1280'              // Default background resolution
+    ].join('\n');
 
-    if (customisationData) {
-        // Split the data by newline to get each individual setting
-        const [backgroundImage, primaryColor, secondaryColor, backgroundRes] = customisationData.split('\n');
-        const fixedBackgroundImg = document.querySelector('.fixed-background');
+    // Store the default values in the "customisation" key in localStorage
+    localStorage.setItem('customisation', defaultCustomisation);
 
-        // Apply the background image if it exists
-        if (fixedBackgroundImg && backgroundImage) {
-            fixedBackgroundImg.style.backgroundImage = `url('${backgroundImage}')`;
-        }
+    // Split the data to get each individual setting
+    const [backgroundImage, primaryColor, secondaryColor, backgroundRes] = defaultCustomisation.split('\n');
 
-        // Apply the primary color if it exists
-        if (primaryColor) {
-            document.documentElement.style.setProperty('--primary-color', primaryColor);
-        }
+    // Apply the background image and resolution if available
+    if (fixedBackgroundImg) {
+        fixedBackgroundImg.style.backgroundImage = `url('${backgroundImage}')`;
 
-        // Apply the secondary color if it exists
-        if (secondaryColor) {
-            document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-            document.querySelector('.container').style.backgroundColor = secondaryColor;
-        }
-
-        // Apply the background resolution if it exists
-        if (backgroundRes) {
-            fixedBackgroundImg.style.backgroundSize = `${backgroundRes}px auto`;
+        const backgroundResValue = parseInt(backgroundRes.trim());
+        if (!isNaN(backgroundResValue)) {
+            fixedBackgroundImg.style.backgroundSize = `${backgroundResValue}px auto`;
         }
     }
-}
 
-window.addEventListener('load', applyStoredSettings);
+    // Apply the primary and secondary colors
+    document.documentElement.style.setProperty('--primary-color', primaryColor);
+    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
 
-document.getElementById('settings-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const backgroundImageValue = document.getElementById('background-image').value;
-    const primaryColorValue = document.getElementById('primary-color').value;
-    const secondaryColorValue = document.getElementById('background-color').value;
-    const backgroundResValue = document.getElementById('background-res').value;
-
-    // Combine the values into a single string, with each value separated by a newline
-    const customisationData = `${backgroundImageValue}\n${primaryColorValue}\n${secondaryColorValue}\n${backgroundResValue}`;
-
-    // Store the combined string in localStorage under the key "customisation"
-    localStorage.setItem('customisation', customisationData);
-
-    // Reload the page to apply changes
-    location.reload();
+    // Apply the secondary color to specific elements like the container
+    const container = document.querySelector('.container');
+    if (container) {
+        container.style.backgroundColor = secondaryColor;
+    }
 });
+
+// Automatically apply settings on window load
+window.addEventListener('load', applyStoredSettings);
